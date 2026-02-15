@@ -1,14 +1,9 @@
 const { io } = require("socket.io-client");
 
-const BACKEND_URL = process.env.BACKEND_SOCKET_URL || "http://localhost:5000";
+const socket = io("http://backend:5000", {
 
-const socket = io(BACKEND_URL, {
   transports: ["websocket"],
-  reconnection: true,
-  reconnectionAttempts: Infinity,
-  reconnectionDelay: 2000,
 });
-
 
 socket.on("connect", () => {
   console.log("🟢 Simulator connected:", socket.id);
