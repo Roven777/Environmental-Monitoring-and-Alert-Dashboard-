@@ -1,18 +1,15 @@
 const mongoose = require("mongoose");
 
-let connected = false;
-
-async function connectDB() {
-  if (connected) return;
-
-  mongoose.set("strictQuery", true);
-
-  await mongoose.connect(process.env.MONGO_URI, {
-    serverSelectionTimeoutMS: 10000,
-  });
-
-  connected = true;
-  console.log("✅ MongoDB connected");
-}
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      dbName: "iot",
+    });
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+};
 
 module.exports = connectDB;
